@@ -1,6 +1,8 @@
 # Ivee 3D Editor - a smooth and delightful journey using Aurelia and ThreeJS
 
-Ivee 3d Editor is just an editor, a 3D editor. Nothing special with it, it provides features like adding various 3D objects - cubes, spheres, torus, etc., configuring materials, textures, shaders, providing animations, tweening etc.
+[Ivee 3d Editor](http://editor.ivee.tech) is just an editor, a 3D editor. Nothing special with it, it provides features like adding various 3D objects - cubes, spheres, torus, etc., configuring materials, textures, shaders, providing animations, tweening etc.
+
+![Ivee 3D Editor](http://editor.ivee.tech/svc/data/ivusers/demo@ivee.tech/tNeNGumvJj/images/iv-3d-1.png "Ivee 3D Editor")
 
 In the following article, I'm going to explain a bit about the internals of the editor and my journey on building Ivee using Aurelia and ThreeJS.
 
@@ -14,13 +16,13 @@ At that time, my thought was that if things are not working well with Aurelia, I
 
 ## Choosing Aurelia CLI
 
-So I started looking at Rob's video on aurelia.io and from the first go I was impressed with the simplicity and naturalness of Aurelia. I installed Aurelia CLI and in 10 minutes I had a fully running application, with routing, components, data binding and output events. From that point, I had no doubt about my choice, even though I had a little fear that along the way I will encounter difficulties. With this in mind, I set my expectation that my plans to integrate legacy or non-Aurelia libraries might not work as smoothly as I would like. 
+So I started looking at Rob's video on [aurelia.io](http://aurelia.io) and from the first go I was impressed with the simplicity and naturalness of Aurelia. I installed Aurelia CLI and in 10 minutes I had a fully running application, with routing, components, data binding and output events. From that point, I had no doubt about my choice, even though I had a little fear that along the way I will encounter difficulties. With this in mind, I set my expectation that my plans to integrate legacy or non-Aurelia libraries might not work as smoothly as I would like. 
 
 Later on, it turned out that this is one of the features that sets Aurelia apart - the ease of integrating almost everything with Aurelia without spending hours and hours of research and bugs chasing. 
 
 ## Integrating ThreeJS (and other libraries)
 
-Integrating ThreeJS (and other libraries)
+After setting up the app component and the routes, which was a breeze I might say, my next concern was how I could integrate ThreeJS. I was pretty familar with the library as I tried various JavaScipt experiments, but never using TypeScript and Aurelia. After digging a little bit, I found that there was already a [npm package for ThreeJS](https://www.npmjs.com/package/three). I installed it and I checked the Aurelia documentation about how to [configure libraries](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli/10). In no time, I learnt how to modify aurelia.json file to include client libraries and I had my little three js scene up and running - the little rotating cube at the XYZ axis that's on the Ivee 3D Editor [home page](http://editor.ivee.tech)   
 
 ## Data
 

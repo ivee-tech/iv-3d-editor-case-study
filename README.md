@@ -6,6 +6,8 @@
 
 In the following article, I'm going to explain a bit about the internals of the editor and my journey on building Ivee using Aurelia and ThreeJS.
 
+On the server-side, Ivee 3D Editor uses .NET web api with a SQL Server database used to store user authentication information. The editor output is stored as JSON file on the server, in a dedicated user space. The database and web application is hosted on Azure.
+
 ## Why Aurelia?
 
 I started working on Ivee on Dec 2016, as a pet project, dedicating very little time, mostly at night and during weekends. My regular job is full stack .NET developer and the frontend framework I'm using at work is Angular. That means I didnd't have much experience (even knowledge, to be honest) about Aurelia. 
@@ -26,7 +28,7 @@ After setting up the app component and the routes, which was a breeze I might sa
 
 ## Data
 
-Data
+I 
 
 ## Forms
 

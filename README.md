@@ -24,11 +24,45 @@ Later on, it turned out that this is one of the features that sets Aurelia apart
 
 ## Integrating ThreeJS (and other libraries)
 
-After setting up the app component and the routes, which was a breeze I might say, my next concern was how I could integrate ThreeJS. I was pretty familar with the library as I tried various JavaScipt experiments, but never using TypeScript and Aurelia. After digging a little bit, I found that there was already a [npm package for ThreeJS](https://www.npmjs.com/package/three). I installed it and I checked the Aurelia documentation about how to [configure libraries](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli/10). In no time, I learnt how to modify aurelia.json file to include client libraries and I had my little three js scene up and running - the little rotating cube at the XYZ axis that's on the Ivee 3D Editor [home page](http://editor.ivee.tech)   
+After setting up the app component and the routes, which was a breeze I might say, my next concern was how I could integrate ThreeJS. I was pretty familar with the library as I tried various JavaScipt experiments, but never using TypeScript and Aurelia. After digging a little bit, I found that there was already a [npm package for ThreeJS](https://www.npmjs.com/package/three). I installed it and I checked the Aurelia documentation about how to [configure libraries](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli/10). In no time, I learnt how to modify *aurelia.json* file to include client libraries and I had my little three js scene up and running - the little rotating cube at the XYZ axis that's on the Ivee 3D Editor [home page](http://editor.ivee.tech)   
+
+## Authentication
+
+Authentication
 
 ## Data
 
-I 
+Integrating data with Aurelia was really easy and I loved that there are options to eitherr use Fetch API, using *aurelia-fetch-client* or XMLHttpRequest API using *aurelia-http-client*. Preferable is Fetch [HttpClient](http://aurelia.io/hub.html#/doc/api/aurelia/fetch-client/latest/class/HttpClient), however, for compatibility reasons, you can use the *xhr* plugin.
+
+[Dependency Injection](http://aurelia.io/hub.html#/doc/article/aurelia/dependency-injection/latest/dependency-injection-basics/1) works nicely with Aurelia and you can easily swap one plugin with another. I started with [*xhr*](https://github.com/aurelia/http-client), but later on I moved to fect client without minimal changes.
+
+Here is a sample code form my data service:
+
+```ts
+@inject(HttpClient, UserService)
+export class DataService {
+
+
+    constructor(private httpClient: HttpClient,
+        private userSvc: UserService
+    ) {
+    }
+
+    loadData(url: string, addToken?: boolean) {
+        let headers: Headers = new Headers();
+        if (addToken) {
+            headers.append('Authorization', `Bearer ${this.userSvc.token}`);
+        }
+        return this.httpClient.fetch(url, {
+            credentials: 'include',
+            headers: headers
+        })
+            .then(response => {
+                return this.handleResponse(response);
+            });
+    }
+}
+```
 
 ## Forms
 
@@ -52,40 +86,8 @@ Our job is way much simpler - learn and use these wonderful gems that people lik
 
 ```js
 
-var AsciiEffect = require('three-asciieffect')
+var a = 0;
 
-function start(gl, width, height) {
-    renderer = new THREE.WebGLRenderer({
-        canvas: gl.canvas
-    })
-    renderer.setClearColor(0x000000, 1.0)
-
-    scene = new THREE.Scene()
-    camera = new THREE.PerspectiveCamera(50, width/height, 1, 1000)
-    camera.position.set(0, 1, -3)
-    camera.lookAt(new THREE.Vector3())
-
-    asciiEffect = new AsciiEffect(renderer);
-
-    var geo = new THREE.BoxGeometry(1,1,1)
-    var mat = new THREE.MeshBasicMaterial({ wireframe: true, color: 0xffffff })
-    var box = new THREE.Mesh(geo, mat)
-    scene.add(box)
-}
-
-function render(gl, width, height) {
-    asciiEffect.render(scene, camera);
-}
 ```
 
 
-#### `AsciiEffect = require('three-asciieffect')`
-
-This module exports a function which returns an AsciiEffect class. This allows you to use the module with CommonJS, globals, etc.
-
-
-The returned function has the following constructor pattern:
-
-```js
-asciiEffect = new AsciiEffect(renderer, charSet, options)
-```

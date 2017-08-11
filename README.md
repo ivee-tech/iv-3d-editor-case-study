@@ -76,9 +76,9 @@ Using Redux
 
 Dynamic content
 
-## Exposed API
+## Exposing Viewer API
 
-Exposed API
+Exposing Viewer API
 
 ## Conclusion
 

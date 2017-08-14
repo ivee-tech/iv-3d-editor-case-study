@@ -10,7 +10,7 @@ On the server-side, Ivee 3D Editor uses .NET Web API with a SQL Server database 
 
 ## Why Aurelia?
 
-I started working on Ivee on Dec 2016. It was a pet project, and I couldn't afford to dedicate a lot of time, only at night and during weekends. My regular job is full stack .NET developer and the frontend framework I'm using at work is Angular. That means I didnd't have much experience (even knowledge, to be honest) about Aurelia. 
+I started working on Ivee on Dec 2016. It was a pet project, and I couldn't afford to dedicate a lot of time, only at night and during weekends. My regular job is full stack .NET developer and the frontend framework I'm using at work is Angular. That means I didn't have much experience (even knowledge, to be honest) with Aurelia. 
 
 I came across Aurelia by talking to my friend Dragos, who was disappointed by Angular and its awkward syntax - which I never liked it myself. He started exploring Aurelia and I was interested to learn how to use it as well. I thought learning another framework would be beneficial to my technical knowledge. 
 
@@ -79,12 +79,10 @@ Other libraries I'm using:
 
 ## Authentication
 
-Authentication is a tricky part of single-page applications which use routes. You want to have authenticated pages, like user settings as well as pages with
-anonymous access like home page, login, and signup pages. Aurelia helps a lot with its very own **setRoot** method which can be called conditionally:
+Authentication is a tricky part of single-page applications which use routes. You want to have authenticated pages, like user settings, as well as pages with anonymous access like home page, login, and signup pages. Aurelia helps a lot with its very own **setRoot** method which can be called conditionally:
 
 ```ts
     let userSvc: UserService = aurelia.container.get(UserService);
-    // let router: Router = aurelia.container.get(Router);
     let url = window.location.href;
     let noAuthPages: string[] = ['home', 'editor', 'viewer', 'login', 'signup'];
     let isNoAuth = noAuthPages.filter(item => url.indexOf(item) >= 0).length > 0;
@@ -103,7 +101,7 @@ On the server side I use token authentication using [ASP.NET Identity framework]
 
 ## Data
 
-Integrating data with Aurelia was really easy and I loved that there are options to eitherr use Fetch API, using *aurelia-fetch-client* or XMLHttpRequest API using *aurelia-http-client*. Preferable is Fetch [HttpClient](http://aurelia.io/hub.html#/doc/api/aurelia/fetch-client/latest/class/HttpClient), however, for compatibility reasons, you can use the *xhr* plugin.
+Integrating data with Aurelia was really easy and I loved that there are options to either use Fetch API, using *aurelia-fetch-client* or XMLHttpRequest API using *aurelia-http-client*. Preferable is Fetch [HttpClient](http://aurelia.io/hub.html#/doc/api/aurelia/fetch-client/latest/class/HttpClient), however, for compatibility reasons, you can use the *xhr* plugin.
 
 [Dependency Injection](http://aurelia.io/hub.html#/doc/article/aurelia/dependency-injection/latest/dependency-injection-basics/1) works nicely with Aurelia and you can easily swap one plugin with another. I started with [*xhr*](https://github.com/aurelia/http-client), but later on I moved to fetch client with minimal changes.
 
@@ -191,7 +189,7 @@ Can't be any cleaner than this.
 
 Giving the fact that most of the user work is performed on the client side, I wanted to have a proper way to manage state in Ivee 3D Editor. One great pattern for managing application state is [Redux](http://redux.js.org/docs/introduction/). 
 
-Having used Redux in Angular 2, I was familiar with the pattern: actions, reducers, state, stores, effects, etc. However, Angular 2 takes advantage of [ngrx])(https://github.com/ngrx) library which does a lot of heavy lifting and returns Observables ready to use by Angular components.
+Having used Redux in Angular 2, I was familiar with the pattern: actions, reducers, state, stores, effects, etc. However, Angular 2 takes advantage of [ngrx](https://github.com/ngrx) library which does a lot of heavy lifting and returns Observables ready to use by Angular components.
 
 I couldn't find anything similar for Aurelia, however the standard [Redux NPM packages](https://www.npmjs.com/package/redux) work without any issue. I spent a bit of time - one user story, about the whole 2 weeks sprint - to integrate the packages and create my own functionality for loading and saving editor data as JSON files, but it was really worth it.
 
@@ -377,7 +375,7 @@ This is the corresponding HTML template, where the **data** property (of **DataM
 </template>
 ```
 
-As usual, there are lots of shades of gray, and, depending on how complex your application is, soon you realise that input data and output events in a component structure of more than three levels is hard to follow, to debug and to maintain. But don't despair, the smart people behind Aurelia thought of that too and they introduced the [Event Aggregator](https://github.com/aurelia/event-aggregator) which is a beautiful implementation of a well-known pattern. Used wisely, the event aggregator is a powerful tool which can make your code really tidy and easy to understand and maintain.
+As usual, there are lots of shades of gray, and, depending on how complex your application is, soon you realise that input data and output events in a component structure of more than three levels is hard to follow, debug and maintain. But don't despair, the smart people behind Aurelia thought of that too and they introduced the [Event Aggregator](https://github.com/aurelia/event-aggregator) which is a beautiful implementation of a well-known pattern. Used wisely, the event aggregator is a powerful tool which can make your code really tidy and easy to understand and maintain.
 
 For example, to manage errors in a central location in your app, you can use Redux and that works nicely. However, using the Event Agreggator you can publish a custom error (applicable at every component level) and let a central component (like **App**) to handle it. 
 
@@ -398,7 +396,7 @@ this.appErrorSubscr = this.eventAggregator.subscribe(CustomEventNames.APP_ERROR,
 });
 ```
 
-The property **errorMessage** is past in the template to the **error** component:
+The property **errorMessage** is passed in the template to the **error** component:
 
 ```html
 
@@ -407,7 +405,7 @@ The property **errorMessage** is past in the template to the **error** component
 
 ```
 
-To avoid memory leaks, always dispose the subscription in the detached hook:
+To avoid memory leaks, always dispose the subscription in the **detached** hook:
 
 ```ts
 detached() {
@@ -424,7 +422,7 @@ Ivee 3D Editor is able to display HTML content in configurable panels. My intent
 To be honest, I was prepared to leave this feature out, thinking it might be difficult to integrate dynamic content in a component. Aurelia came to rescue though and this is an eye opener of how powerful Aurelia is. Behind its simplicity there are a lot of complex features which developer can reuse and take advantage of.
 After checking the documentation and after digging in a few Stack Overflow questions, I found that there is a neat way to override the view strategy of a component. 
 
-This is the code of my **ContentPanel** component which uses the **ViewCompiler** service to create the component view at runtime, based on content provided by a custom model (**AdditionalContent**). If you look at the code, there is a binding context hook into the view, which means that even after the initial creation, the view will be updated if the content changes, as it happens with a normal, static template. And these features are out of the box, without installing any additional plugin, 3rd party library or framework! I love Aurelia, because things just work! 
+This is the code of my **ContentPanel** component which uses the **ViewCompiler** service to create the component view at runtime, based on content provided by a custom model (**AdditionalContent**). If you check the code, there is a binding context hooked into the view, which means that even after the initial creation, the view will be updated if the content changes, as it happens with a normal, static template. And these features are out of the box, without installing any additional plugin, 3rd party library or framework! I love Aurelia, because things just work! 
 
 ```ts
 import {inject, noView, ViewCompiler, ViewSlot, Container, ViewResources, bindable} from 'aurelia-framework';
@@ -571,8 +569,8 @@ However, I think that for a one man job outside working hours is a pretty good a
 
 Aurelia is beautiful because it doesn't stay in your way, it guides you to do things then goes on the side, admitting that you need to focus on your business. It helps and it doesn't ask for anything in return, it is your quiet and supportive friend always close to you during your journey, ensuring that you have all the resources necessary to climb the highest peaks.
 
-We live in amazing times, where dreams get closer and closer to reality. Our job now is way much simpler than before - we only need to learn and use these wonderful gems that people like Rob create. And Aurelia is a gem that doesn't have a huge learning curve and the time invested to learn is returned thousandfold. 
-If I had to add my own motto for Arelia, it would be as simple as this: Aurelia - let amazing things happen.
+We live in amazing times, where dreams get closer and closer to reality. Our job now is way much simpler than before - we only need to learn and use these wonderful gems that people like Rob create. And Aurelia is a gem that doesn't have a huge learning curve and the time invested to learn it is returned thousandfold. 
+If I had to add my own motto for Arelia, it would be as simple as this: "Aurelia - let amazing things happen".
 
 
 

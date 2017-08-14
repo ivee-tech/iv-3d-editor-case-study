@@ -570,7 +570,7 @@ However, I think that for a one man job outside working hours is a pretty good a
 Aurelia is beautiful because it doesn't stay in your way, it guides you to do things then goes on the side, admitting that you need to focus on your business. It helps and it doesn't ask for anything in return, it is your quiet and supportive friend always close to you during your journey, ensuring that you have all the resources necessary to climb the highest peaks.
 
 We live in amazing times, where dreams get closer and closer to reality. Our job now is way much simpler than before - we only need to learn and use these wonderful gems that people like Rob create. And Aurelia is a gem that doesn't have a huge learning curve and the time invested to learn it is returned thousandfold. 
-If I had to add my own motto for Arelia, it would be as simple as this: "Aurelia - let amazing things happen".
+If I had to add my own motto for Aurelia, it would be as simple as this: "Aurelia - let amazing things happen".
 
 
 
